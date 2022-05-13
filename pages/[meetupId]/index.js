@@ -45,8 +45,16 @@ export async function getStaticPaths() {
        * display a 404 error it a param is entered that is not contained in the params list.
        * true means it contains some of them and if a param entered not in the list, it'll return 
        * a dummy page that has been previously loaded before probably from the cache
+       * 
+       * If we set fallback to false, any request for pages that werent generated before will fail
+       * It will work for development but will fail after deployment
+       * 
+       * fallback of blocking tells next.js the list of paths might not be exhaustive and there might be 
+       * more valid pages. Difference between true and blocking is true shows an empty page and downloads
+       * the contents whereas blocking generates the entire page on the server and then shows that page
+       * to the user
        */
-    fallback: false,
+    fallback: "blocking",
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
