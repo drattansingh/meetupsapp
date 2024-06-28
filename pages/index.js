@@ -60,13 +60,13 @@ export async function getStaticProps() {
      * the revalidate property unlocks incremental static generation. 1 is the amount of seconds it'll take
      * to revalidate.... a value of 10 means it'll revalidate after every 10 seconds
      */
-    revalidate: 1 
+    revalidate: 1  // incremental static generation
   }; 
 }
 
 
 /** This is also a reserved function but unlike the above will not execute during the build process
- * but on the server after deployment. All the code in this function will execute on the server and never
+ * but on the server after deployment. All the code in this function will execute on the server and NEVER
  * on the client. It has access to request and response similar to node.js.
  * 
  * The code is guaranteed to run for every request because it's executed on the server after deployment.
@@ -75,6 +75,7 @@ export async function getStaticProps() {
  * If the data isn't changing regularly then the getStatisProps is better. But if the data is changing
  * regularly anc constantly, the getServerSideProps will be better
  */
+
 
 // export async function getServerSideProps(context) {
 //   const req = context.req;

@@ -41,6 +41,18 @@ export async function getStaticPaths() {
   client.close();
 
   return {
+    /***If fallback is false, then any paths not returned by getStaticPaths will result in a 404 page.
+     * 
+    If fallback is true, then the behavior of getStaticProps changes:
+
+    The paths returned from getStaticPaths will be rendered to HTML at build time.
+    The paths that have not been generated at build time will not result in a 404 page. 
+    Instead, Next.js will serve a “fallback” version of the page on the first request to such a path.
+    In the background, Next.js will statically generate the requested path. Subsequent requests to the 
+    same path will serve the generated page, just like other pages pre-rendered at build time.
+    If fallback is blocking, then new paths will be server-side rendered with getStaticProps, and 
+    cached for future requests so it only happens once per path. */
+
       /** fallback: false tells that path array that it has ALL the supported params values and will 
        * display a 404 error it a param is entered that is not contained in the params list.
        * true means it contains some of them and if a param entered not in the list, it'll return 
@@ -55,7 +67,7 @@ export async function getStaticPaths() {
        * to the user
        */
     fallback: "blocking",
-    paths: meetups.map((meetup) => ({
+    paths: meetups.map((meetup) => ({ // the getStatidPaths needs the paths object with params key with all key/value pairs
       params: { meetupId: meetup._id.toString() },
     })),
   };
